@@ -1,0 +1,19 @@
+{
+  "name": "react-material-crud",
+  "version": "1.0.1",
+  "main": "./dist/index.js",
+  "peerDependencies": {
+    "@crud/core": "^1.0.9",
+    "@material-ui/core": "^3.9.0",
+    "react": "^16.7.0"
+  },
+  "devDependencies": {
+    "@crud/core": "^1.0.9",
+    "@material-ui/core": "^3.9.0",
+    "@types/classnames": "^2.2.7",
+    "lodash": "^4.17.11",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "typescript": "^3.2.4"
+  }
+}
