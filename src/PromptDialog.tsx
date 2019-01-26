@@ -33,7 +33,7 @@ export class PromptDialog extends React.Component {
             config.callbacks.prompt = options => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
-                const {textContent, title, placeholder, initialValue} = options
+                const {textContent, title, placeholder, initialValue = ""} = options
                 this.setState({textContent, title, placeholder, show: true, value: initialValue})
             })
 
@@ -68,7 +68,7 @@ export class PromptDialog extends React.Component {
                     label={label}
                     placeholder={placeholder}
                     type={inputType}
-                    value={this.state.value || ''}
+                    value={this.state.value}
                     onChange={event => {
                         const value = event.target.value;
                         this.setState(({...state}: any) => {

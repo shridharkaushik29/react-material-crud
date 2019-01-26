@@ -51,7 +51,7 @@ var PromptDialog = /** @class */ (function (_super) {
             config.callbacks.prompt = function (options) { return new Promise(function (resolve, reject) {
                 _this.onConfirm = resolve;
                 _this.onCancel = reject;
-                var textContent = options.textContent, title = options.title, placeholder = options.placeholder, initialValue = options.initialValue;
+                var textContent = options.textContent, title = options.title, placeholder = options.placeholder, _a = options.initialValue, initialValue = _a === void 0 ? "" : _a;
                 _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
             }); };
             return config;
@@ -76,7 +76,7 @@ var PromptDialog = /** @class */ (function (_super) {
             React.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
             React.createElement(core_1.DialogContent, null,
                 React.createElement(core_1.Typography, { variant: "h6" }, textContent),
-                React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: inputType, value: this.state.value || '', onChange: function (event) {
+                React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: inputType, value: this.state.value, onChange: function (event) {
                         var value = event.target.value;
                         _this.setState(function (_a) {
                             var state = __rest(_a, []);
