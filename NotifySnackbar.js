@@ -30,11 +30,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var CrudProvider_1 = require("./CrudProvider");
-var Button_1 = __importDefault(require("@material-ui/core/es/Button"));
-var Snackbar_1 = __importDefault(require("@material-ui/core/es/Snackbar"));
-var withStyles_1 = __importDefault(require("@material-ui/core/es/styles/withStyles"));
-var SnackbarContent_1 = __importDefault(require("@material-ui/core/es/SnackbarContent"));
+var Button_1 = __importDefault(require("@material-ui/core/Button"));
+var Snackbar_1 = __importDefault(require("@material-ui/core/Snackbar"));
+var withStyles_1 = __importDefault(require("@material-ui/core/styles/withStyles"));
+var SnackbarContent_1 = __importDefault(require("@material-ui/core/SnackbarContent"));
+var CrudContext_1 = require("@crud/react/CrudContext");
 var classNames = require("classnames");
 // @ts-ignore
 var NotifySnackbar = /** @class */ (function (_super) {
@@ -63,27 +63,24 @@ var NotifySnackbar = /** @class */ (function (_super) {
         var _a = this.props, classes = _a.classes, _b = _a.autoHideDuration, autoHideDuration = _b === void 0 ? 2000 : _b;
         var _c = this.state, message = _c.message, type = _c.type, action = _c.action;
         return React.createElement(Snackbar_1.default, { autoHideDuration: autoHideDuration, open: !!this.state.open, onClose: function () {
-                _this.setState({
-                    open: false,
-                });
+                _this.setState({ open: false });
                 _this.onClose();
             } },
             React.createElement(SnackbarContent_1.default, { classes: {
                     root: classNames(type === "success" ? classes.success : type === "error" ? classes.error : "")
                 }, message: message, action: action }));
     };
-    NotifySnackbar.contextType = CrudProvider_1.CrudContext;
+    NotifySnackbar.contextType = CrudContext_1.CrudContext;
     NotifySnackbar = __decorate([
         withStyles_1.default({
             error: {
-                backgroundColor: "red"
+                backgroundColor: "#a90000"
             },
             success: {
-                backgroundColor: "green"
+                backgroundColor: "#009f00"
             }
         })
     ], NotifySnackbar);
     return NotifySnackbar;
 }(React.Component));
 exports.NotifySnackbar = NotifySnackbar;
-//# sourceMappingURL=NotifySnackbar.js.map

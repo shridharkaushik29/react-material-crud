@@ -1,9 +1,9 @@
 import * as React from "react";
 import {CrudRequest} from "@crud/core";
-import {CrudContext, CrudProvider} from "./CrudProvider";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@material-ui/core";
-import TextField from "@material-ui/core/es/TextField";
-import Button from "@material-ui/core/es/Button";
+import {Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import {CrudContext} from "@crud/react/CrudContext";
 
 export interface PromptOptions {
     title?: string,

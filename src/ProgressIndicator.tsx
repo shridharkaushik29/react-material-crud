@@ -1,8 +1,8 @@
 import * as React from "react";
-import {CrudContext} from "./CrudProvider";
-import {CrudRequest} from "@crud/core/src";
+import {CrudRequest} from "@crud/core";
 import {LinearProgress} from "@material-ui/core";
-import withStyles from "@material-ui/core/es/styles/withStyles";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {CrudContext} from "@crud/react/CrudContext";
 
 
 // @ts-ignore

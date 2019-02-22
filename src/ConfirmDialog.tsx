@@ -1,8 +1,8 @@
 import * as React from "react";
-import {CrudContext} from "./CrudProvider";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
-import {CrudRequest} from "@crud/core/src";
-import Button from "@material-ui/core/es/Button";
+import {CrudRequest} from "@crud/core";
+import Button from "@material-ui/core/Button";
+import {CrudContext} from "@crud/react/CrudContext";
 
 export class ConfirmDialog extends React.Component {
 

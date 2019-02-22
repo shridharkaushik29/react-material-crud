@@ -23,12 +23,17 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@crud/core@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@crud/core/-/core-1.0.9.tgz#853e6420d1d4c216bd40af9875a6070b4608ea2f"
-  integrity sha512-A1CDrVah86Btx0sMO1aCuNlCG2a1QWNhOsbI2Gq84OwY1oEMEi2T5YR7FG/TdcFzS8za6uv0GNDMj/Zy3e1IgA==
+"@crud/core@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@crud/core/-/core-2.0.2.tgz#ad91d3f9d06d868819a2144da57d9cf580059eb0"
+  integrity sha512-JVDdfYajYbffhIfOMYajFUuYgC4F6LoICHTDbNG9HCFq360kFShu3w5D+bmAiVm9Wya7aSU2hL4ufh/7tNHTtQ==
   dependencies:
     url-search-params "^1.1.0"
+
+"@crud/react@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@crud/react/-/react-1.0.0.tgz#5cd43b1300fac53b0151d833147ba48e24a52321"
+  integrity sha512-wDdsobiUbaXKnWI6QTy/P/d8Hu8wZ//LFbmFRO4Bcxui8u6zhtnSMmJmcHecjcqdaav5dYSeVNXiCHvtFNQjlw==
 
 "@material-ui/core@^3.9.0":
   version "3.9.0"

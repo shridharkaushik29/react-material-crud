@@ -1,14 +1,19 @@
 {
   "name": "react-material-crud",
-  "version": "1.0.1",
-  "main": "./dist/index.js",
+  "version": "2.0.1",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc --watch"
+  },
   "peerDependencies": {
-    "@crud/core": "^1.0.9",
-    "@material-ui/core": "^3.9.0",
-    "react": "^16.7.0"
+    "@crud/core": "2.0.*",
+    "@crud/react": "1.0.*",
+    "@material-ui/core": "^3.9.2",
+    "react": "^16.8.3"
   },
   "devDependencies": {
-    "@crud/core": "^1.0.9",
+    "@crud/core": "^2.0.2",
+    "@crud/react": "^1.0.0",
     "@material-ui/core": "^3.9.0",
     "@types/classnames": "^2.2.7",
     "lodash": "^4.17.11",

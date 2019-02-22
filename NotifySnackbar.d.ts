@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CrudRequest } from "@crud/core/src";
+import { CrudRequest } from "@crud/core";
 export declare class NotifySnackbar extends React.Component {
     context: CrudRequest;
     props: {

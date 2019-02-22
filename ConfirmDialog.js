@@ -24,9 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var CrudProvider_1 = require("./CrudProvider");
 var core_1 = require("@material-ui/core");
-var Button_1 = __importDefault(require("@material-ui/core/es/Button"));
+var Button_1 = __importDefault(require("@material-ui/core/Button"));
+var CrudContext_1 = require("@crud/react/CrudContext");
 var ConfirmDialog = /** @class */ (function (_super) {
     __extends(ConfirmDialog, _super);
     function ConfirmDialog() {
@@ -70,8 +70,7 @@ var ConfirmDialog = /** @class */ (function (_super) {
                 React.createElement(Button_1.default, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
                 React.createElement(Button_1.default, { onClick: function () { return _this.confirm(); }, color: "primary", autoFocus: true }, ok)));
     };
-    ConfirmDialog.contextType = CrudProvider_1.CrudContext;
+    ConfirmDialog.contextType = CrudContext_1.CrudContext;
     return ConfirmDialog;
 }(React.Component));
 exports.ConfirmDialog = ConfirmDialog;
-//# sourceMappingURL=ConfirmDialog.js.map

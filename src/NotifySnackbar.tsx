@@ -1,19 +1,19 @@
 import * as React from "react";
-import {CrudContext} from "./CrudProvider";
-import {CrudRequest} from "@crud/core/src";
-import Button from "@material-ui/core/es/Button";
-import Snackbar from "@material-ui/core/es/Snackbar";
-import withStyles from "@material-ui/core/es/styles/withStyles";
-import SnackbarContent from "@material-ui/core/es/SnackbarContent";
+import {CrudRequest} from "@crud/core";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import withStyles from "@material-ui/core/styles/withStyles";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import {CrudContext} from "@crud/react/CrudContext";
 import classNames = require("classnames");
 
 // @ts-ignore
 @withStyles({
     error: {
-        backgroundColor: "red"
+        backgroundColor: "#a90000"
     },
     success: {
-        backgroundColor: "green"
+        backgroundColor: "#009f00"
     }
 })
 export class NotifySnackbar extends React.Component {
@@ -58,9 +58,7 @@ export class NotifySnackbar extends React.Component {
         const {message, type, action} = this.state;
 
         return <Snackbar autoHideDuration={autoHideDuration} open={!!this.state.open} onClose={() => {
-            this.setState({
-                open: false,
-            })
+            this.setState({open: false})
             this.onClose()
         }}>
             <SnackbarContent
