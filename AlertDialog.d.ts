@@ -1,11 +1,13 @@
 import * as React from "react";
 import { CrudRequest } from "@crud/core";
-export default class ProgressIndicator extends React.Component {
+export default class AlertDialog extends React.Component<{
+    dialogProps?: any;
+}, any> {
     context: CrudRequest;
-    props: any;
     static contextType: React.Context<CrudRequest>;
     state: any;
-    onClose: () => void;
+    onConfirm: () => void;
     componentDidMount(): void;
+    confirm(): void;
     render(): React.ReactNode;
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CrudRequest } from "@crud/core";
-export declare class ConfirmDialog extends React.Component {
+export default class ConfirmDialog extends React.Component {
     context: CrudRequest;
     static contextType: React.Context<CrudRequest>;
     state: any;

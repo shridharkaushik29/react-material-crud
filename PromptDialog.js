@@ -28,14 +28,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var core_1 = require("@material-ui/core");
-var TextField_1 = __importDefault(require("@material-ui/core/TextField"));
-var Button_1 = __importDefault(require("@material-ui/core/Button"));
 var CrudContext_1 = require("@crud/react/CrudContext");
 var PromptDialog = /** @class */ (function (_super) {
     __extends(PromptDialog, _super);
@@ -48,12 +43,15 @@ var PromptDialog = /** @class */ (function (_super) {
         var _this = this;
         var $crud = this.context;
         $crud.config(function (config) {
-            config.callbacks.prompt = function (options) { return new Promise(function (resolve, reject) {
-                _this.onConfirm = resolve;
-                _this.onCancel = reject;
-                var textContent = options.textContent, title = options.title, placeholder = options.placeholder, _a = options.initialValue, initialValue = _a === void 0 ? "" : _a;
-                _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
-            }); };
+            config.callbacks.prompt = function (options) {
+                if (options === void 0) { options = {}; }
+                return new Promise(function (resolve, reject) {
+                    _this.onConfirm = resolve;
+                    _this.onCancel = reject;
+                    var textContent = options.textContent, title = options.title, placeholder = options.placeholder, _a = options.initialValue, initialValue = _a === void 0 ? "" : _a;
+                    _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
+                });
+            };
             return config;
         });
     };
@@ -76,7 +74,7 @@ var PromptDialog = /** @class */ (function (_super) {
             React.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
             React.createElement(core_1.DialogContent, null,
                 React.createElement(core_1.Typography, { variant: "h6" }, textContent),
-                React.createElement(TextField_1.default, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: inputType, value: this.state.value, onChange: function (event) {
+                React.createElement(core_1.TextField, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: inputType, value: this.state.value, onChange: function (event) {
                         var value = event.target.value;
                         _this.setState(function (_a) {
                             var state = __rest(_a, []);
@@ -85,10 +83,10 @@ var PromptDialog = /** @class */ (function (_super) {
                         });
                     }, fullWidth: true })),
             React.createElement(core_1.DialogActions, null,
-                React.createElement(Button_1.default, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
-                React.createElement(Button_1.default, { onClick: function () { return _this.confirm(); }, color: "primary" }, ok)));
+                React.createElement(core_1.Button, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
+                React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary" }, ok)));
     };
     PromptDialog.contextType = CrudContext_1.CrudContext;
     return PromptDialog;
 }(React.Component));
-exports.PromptDialog = PromptDialog;
+exports.default = PromptDialog;

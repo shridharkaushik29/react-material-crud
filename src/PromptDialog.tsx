@@ -1,8 +1,6 @@
 import * as React from "react";
 import {CrudRequest} from "@crud/core";
-import {Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography} from "@material-ui/core";
 import {CrudContext} from "@crud/react/CrudContext";
 
 export interface PromptOptions {
@@ -15,7 +13,7 @@ export interface PromptOptions {
     dialogProps?: any
 }
 
-export class PromptDialog extends React.Component {
+export default class PromptDialog extends React.Component {
 
     context: CrudRequest
 
@@ -30,7 +28,7 @@ export class PromptDialog extends React.Component {
         const $crud = this.context;
         $crud.config(config => {
 
-            config.callbacks.prompt = options => new Promise((resolve, reject) => {
+            config.callbacks.prompt = (options = {}) => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
                 const {textContent, title, placeholder, initialValue = ""} = options

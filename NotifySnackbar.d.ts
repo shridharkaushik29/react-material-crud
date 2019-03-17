@@ -1,6 +1,6 @@
 import * as React from "react";
 import { CrudRequest } from "@crud/core";
-export declare class NotifySnackbar extends React.Component {
+export default class NotifySnackbar extends React.Component {
     context: CrudRequest;
     props: {
         classes?: {

@@ -30,11 +30,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var Button_1 = __importDefault(require("@material-ui/core/Button"));
-var Snackbar_1 = __importDefault(require("@material-ui/core/Snackbar"));
 var withStyles_1 = __importDefault(require("@material-ui/core/styles/withStyles"));
-var SnackbarContent_1 = __importDefault(require("@material-ui/core/SnackbarContent"));
 var CrudContext_1 = require("@crud/react/CrudContext");
+var core_1 = require("@material-ui/core");
 var classNames = require("classnames");
 // @ts-ignore
 var NotifySnackbar = /** @class */ (function (_super) {
@@ -42,7 +40,7 @@ var NotifySnackbar = /** @class */ (function (_super) {
     function NotifySnackbar() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            action: _this.props.action || React.createElement(Button_1.default, { color: "inherit", onClick: function () { return _this.setState({ open: false }); } }, "Hide")
+            action: _this.props.action || React.createElement(core_1.Button, { color: "inherit", onClick: function () { return _this.setState({ open: false }); } }, "Hide")
         };
         return _this;
     }
@@ -62,11 +60,11 @@ var NotifySnackbar = /** @class */ (function (_super) {
         var _this = this;
         var _a = this.props, classes = _a.classes, _b = _a.autoHideDuration, autoHideDuration = _b === void 0 ? 2000 : _b;
         var _c = this.state, message = _c.message, type = _c.type, action = _c.action;
-        return React.createElement(Snackbar_1.default, { autoHideDuration: autoHideDuration, open: !!this.state.open, onClose: function () {
+        return React.createElement(core_1.Snackbar, { autoHideDuration: autoHideDuration, open: !!this.state.open, onClose: function () {
                 _this.setState({ open: false });
                 _this.onClose();
             } },
-            React.createElement(SnackbarContent_1.default, { classes: {
+            React.createElement(core_1.SnackbarContent, { classes: {
                     root: classNames(type === "success" ? classes.success : type === "error" ? classes.error : "")
                 }, message: message, action: action }));
     };
@@ -83,4 +81,4 @@ var NotifySnackbar = /** @class */ (function (_super) {
     ], NotifySnackbar);
     return NotifySnackbar;
 }(React.Component));
-exports.NotifySnackbar = NotifySnackbar;
+exports.default = NotifySnackbar;

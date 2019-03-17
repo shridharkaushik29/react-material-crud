@@ -1,26 +1,25 @@
 import * as React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
-import {CrudRequest} from "@crud/core";
 import {CrudContext} from "@crud/react/CrudContext";
+import {CrudRequest} from "@crud/core";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 
-export default class ConfirmDialog extends React.Component {
-
+export default class AlertDialog extends React.Component<{
+    dialogProps?: any
+}, any> {
     context: CrudRequest
 
     static contextType = CrudContext
 
     state: any = {}
 
-    onCancel: () => void
     onConfirm: () => void
 
     componentDidMount(): void {
         const $crud = this.context;
         $crud.config(config => {
 
-            config.callbacks.confirm = (options = {}) => new Promise((resolve, reject) => {
+            config.callbacks.alert = (options = {}) => new Promise((resolve) => {
                 this.onConfirm = resolve
-                this.onCancel = reject
                 const {textContent, title, cancel, ok} = options
                 this.setState({textContent, title, open: true, cancel, ok})
             })
@@ -29,12 +28,6 @@ export default class ConfirmDialog extends React.Component {
         })
     }
 
-    cancel() {
-        this.setState({
-            open: false
-        })
-        this.onCancel();
-    }
 
     confirm() {
         this.setState({
@@ -45,23 +38,23 @@ export default class ConfirmDialog extends React.Component {
 
     render(): React.ReactNode {
 
-        const {title = "Are you sure?", textContent = "This action may not be reversible", cancel = "No, I'm Not", ok = "Yes! Sure"} = this.state;
+        const {
+            state: {title, textContent, ok = "Hide"},
+            props: {dialogProps}
+        } = this;
 
         return <Dialog
             fullWidth
             maxWidth="xs"
             open={!!this.state.open}
             onClose={() => this.setState({open: false})}
-            aria-labelledby="responsive-dialog-title"
+            {...dialogProps}
         >
             <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>{textContent}</DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => this.cancel()} color="primary">
-                    {cancel}
-                </Button>
                 <Button onClick={() => this.confirm()} color="primary" autoFocus>
                     {ok}
                 </Button>

@@ -89,4 +89,4 @@ var ProgressIndicator = /** @class */ (function (_super) {
     ], ProgressIndicator);
     return ProgressIndicator;
 }(React.Component));
-exports.ProgressIndicator = ProgressIndicator;
+exports.default = ProgressIndicator;

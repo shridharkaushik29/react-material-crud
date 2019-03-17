@@ -9,7 +9,7 @@ export interface PromptOptions {
     cancel?: string;
     dialogProps?: any;
 }
-export declare class PromptDialog extends React.Component {
+export default class PromptDialog extends React.Component {
     context: CrudRequest;
     static contextType: React.Context<CrudRequest>;
     state: any;

@@ -1,10 +1,8 @@
 import * as React from "react";
 import {CrudRequest} from "@crud/core";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
 import withStyles from "@material-ui/core/styles/withStyles";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
 import {CrudContext} from "@crud/react/CrudContext";
+import {Button, Snackbar, SnackbarContent} from "@material-ui/core";
 import classNames = require("classnames");
 
 // @ts-ignore
@@ -16,7 +14,7 @@ import classNames = require("classnames");
         backgroundColor: "#009f00"
     }
 })
-export class NotifySnackbar extends React.Component {
+export default class NotifySnackbar extends React.Component {
 
     context: CrudRequest
 

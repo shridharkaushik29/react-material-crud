@@ -14,7 +14,7 @@ import {CrudContext} from "@crud/react/CrudContext";
         zIndex: 1301
     }
 })
-export class ProgressIndicator extends React.Component {
+export default class ProgressIndicator extends React.Component {
 
     context: CrudRequest
 
