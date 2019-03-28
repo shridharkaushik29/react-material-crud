@@ -1,5 +1,5 @@
 import * as React from "react";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudContext} from "@crud/react";
 import {CrudRequest} from "@crud/core";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 
@@ -20,7 +20,7 @@ export default class AlertDialog extends React.Component<{
 
             config.callbacks.alert = (options = {}) => new Promise((resolve) => {
                 this.onConfirm = resolve
-                const {textContent, title, cancel, ok} = options
+                const {textContent, title, options: {ok, cancel}} = options
                 this.setState({textContent, title, open: true, cancel, ok})
             })
 

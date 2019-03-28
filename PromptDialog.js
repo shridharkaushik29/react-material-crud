@@ -31,7 +31,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var core_1 = require("@material-ui/core");
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("@crud/react");
 var PromptDialog = /** @class */ (function (_super) {
     __extends(PromptDialog, _super);
     function PromptDialog() {
@@ -48,7 +48,7 @@ var PromptDialog = /** @class */ (function (_super) {
                 return new Promise(function (resolve, reject) {
                     _this.onConfirm = resolve;
                     _this.onCancel = reject;
-                    var textContent = options.textContent, title = options.title, placeholder = options.placeholder, _a = options.initialValue, initialValue = _a === void 0 ? "" : _a;
+                    var textContent = options.textContent, title = options.title, _a = options.options, placeholder = _a.placeholder, _b = _a.initialValue, initialValue = _b === void 0 ? "" : _b;
                     _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
                 });
             };
@@ -86,7 +86,7 @@ var PromptDialog = /** @class */ (function (_super) {
                 React.createElement(core_1.Button, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
                 React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary" }, ok)));
     };
-    PromptDialog.contextType = CrudContext_1.CrudContext;
+    PromptDialog.contextType = react_1.CrudContext;
     return PromptDialog;
 }(React.Component));
 exports.default = PromptDialog;

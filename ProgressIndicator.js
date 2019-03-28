@@ -52,7 +52,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var core_1 = require("@material-ui/core");
 var withStyles_1 = __importDefault(require("@material-ui/core/styles/withStyles"));
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("@crud/react");
 // @ts-ignore
 var ProgressIndicator = /** @class */ (function (_super) {
     __extends(ProgressIndicator, _super);
@@ -76,7 +76,7 @@ var ProgressIndicator = /** @class */ (function (_super) {
                 root: classes.root
             }, color: color, variant: variant }, props)) : null;
     };
-    ProgressIndicator.contextType = CrudContext_1.CrudContext;
+    ProgressIndicator.contextType = react_1.CrudContext;
     ProgressIndicator = __decorate([
         withStyles_1.default({
             root: {

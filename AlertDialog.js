@@ -32,7 +32,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("@crud/react");
 var core_1 = require("@material-ui/core");
 var AlertDialog = /** @class */ (function (_super) {
     __extends(AlertDialog, _super);
@@ -49,7 +49,7 @@ var AlertDialog = /** @class */ (function (_super) {
                 if (options === void 0) { options = {}; }
                 return new Promise(function (resolve) {
                     _this.onConfirm = resolve;
-                    var textContent = options.textContent, title = options.title, cancel = options.cancel, ok = options.ok;
+                    var textContent = options.textContent, title = options.title, _a = options.options, ok = _a.ok, cancel = _a.cancel;
                     _this.setState({ textContent: textContent, title: title, open: true, cancel: cancel, ok: ok });
                 });
             };
@@ -72,7 +72,7 @@ var AlertDialog = /** @class */ (function (_super) {
             React.createElement(core_1.DialogActions, null,
                 React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary", autoFocus: true }, ok)));
     };
-    AlertDialog.contextType = CrudContext_1.CrudContext;
+    AlertDialog.contextType = react_1.CrudContext;
     return AlertDialog;
 }(React.Component));
 exports.default = AlertDialog;

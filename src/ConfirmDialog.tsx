@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import {CrudRequest} from "@crud/core";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudContext} from "@crud/react";
 
 export default class ConfirmDialog extends React.Component {
 
@@ -21,7 +21,7 @@ export default class ConfirmDialog extends React.Component {
             config.callbacks.confirm = (options = {}) => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
-                const {textContent, title, cancel, ok} = options
+                const {textContent, title, options: {cancel, ok}} = options
                 this.setState({textContent, title, open: true, cancel, ok})
             })
 

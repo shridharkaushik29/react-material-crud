@@ -1,7 +1,7 @@
 import * as React from "react";
 import {CrudRequest} from "@crud/core";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudContext} from "@crud/react";
 import {Button, Snackbar, SnackbarContent} from "@material-ui/core";
 import classNames = require("classnames");
 
@@ -40,7 +40,7 @@ export default class NotifySnackbar extends React.Component {
         const $crud = this.context;
         $crud.config(config => {
 
-            config.callbacks.notify = options => new Promise((resolve, reject) => {
+            config.callbacks.notify = (options = {}) => new Promise((resolve, reject) => {
                 this.onClose = resolve
                 const {type, message} = options
                 this.setState({message, type, open: true})

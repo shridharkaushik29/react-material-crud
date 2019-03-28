@@ -2,7 +2,7 @@ import * as React from "react";
 import {CrudRequest} from "@crud/core";
 import {LinearProgress} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudContext} from "@crud/react";
 
 
 // @ts-ignore

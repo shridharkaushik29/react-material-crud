@@ -22,7 +22,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var core_1 = require("@material-ui/core");
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("@crud/react");
 var ConfirmDialog = /** @class */ (function (_super) {
     __extends(ConfirmDialog, _super);
     function ConfirmDialog() {
@@ -39,7 +39,7 @@ var ConfirmDialog = /** @class */ (function (_super) {
                 return new Promise(function (resolve, reject) {
                     _this.onConfirm = resolve;
                     _this.onCancel = reject;
-                    var textContent = options.textContent, title = options.title, cancel = options.cancel, ok = options.ok;
+                    var textContent = options.textContent, title = options.title, _a = options.options, cancel = _a.cancel, ok = _a.ok;
                     _this.setState({ textContent: textContent, title: title, open: true, cancel: cancel, ok: ok });
                 });
             };
@@ -69,7 +69,7 @@ var ConfirmDialog = /** @class */ (function (_super) {
                 React.createElement(core_1.Button, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
                 React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary", autoFocus: true }, ok)));
     };
-    ConfirmDialog.contextType = CrudContext_1.CrudContext;
+    ConfirmDialog.contextType = react_1.CrudContext;
     return ConfirmDialog;
 }(React.Component));
 exports.default = ConfirmDialog;

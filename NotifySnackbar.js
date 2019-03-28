@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var withStyles_1 = __importDefault(require("@material-ui/core/styles/withStyles"));
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("@crud/react");
 var core_1 = require("@material-ui/core");
 var classNames = require("classnames");
 // @ts-ignore
@@ -48,11 +48,14 @@ var NotifySnackbar = /** @class */ (function (_super) {
         var _this = this;
         var $crud = this.context;
         $crud.config(function (config) {
-            config.callbacks.notify = function (options) { return new Promise(function (resolve, reject) {
-                _this.onClose = resolve;
-                var type = options.type, message = options.message;
-                _this.setState({ message: message, type: type, open: true });
-            }); };
+            config.callbacks.notify = function (options) {
+                if (options === void 0) { options = {}; }
+                return new Promise(function (resolve, reject) {
+                    _this.onClose = resolve;
+                    var type = options.type, message = options.message;
+                    _this.setState({ message: message, type: type, open: true });
+                });
+            };
             return config;
         });
     };
@@ -68,7 +71,7 @@ var NotifySnackbar = /** @class */ (function (_super) {
                     root: classNames(type === "success" ? classes.success : type === "error" ? classes.error : "")
                 }, message: message, action: action }));
     };
-    NotifySnackbar.contextType = CrudContext_1.CrudContext;
+    NotifySnackbar.contextType = react_1.CrudContext;
     NotifySnackbar = __decorate([
         withStyles_1.default({
             error: {

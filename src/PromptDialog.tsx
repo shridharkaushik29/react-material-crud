@@ -1,7 +1,7 @@
 import * as React from "react";
 import {CrudRequest} from "@crud/core";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography} from "@material-ui/core";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudContext} from "@crud/react";
 
 export interface PromptOptions {
     title?: string,
@@ -31,7 +31,7 @@ export default class PromptDialog extends React.Component {
             config.callbacks.prompt = (options = {}) => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
-                const {textContent, title, placeholder, initialValue = ""} = options
+                const {textContent, title, options: {placeholder, initialValue = ""}} = options
                 this.setState({textContent, title, placeholder, show: true, value: initialValue})
             })
 
