@@ -49,7 +49,8 @@ var AlertDialog = /** @class */ (function (_super) {
                 if (options === void 0) { options = {}; }
                 return new Promise(function (resolve) {
                     _this.onConfirm = resolve;
-                    var textContent = options.textContent, title = options.title, _a = options.options, ok = _a.ok, cancel = _a.cancel;
+                    var textContent = options.textContent, title = options.title, _a = options.options, otherOptions = _a === void 0 ? {} : _a;
+                    var ok = otherOptions.ok, cancel = otherOptions.cancel;
                     _this.setState({ textContent: textContent, title: title, open: true, cancel: cancel, ok: ok });
                 });
             };
