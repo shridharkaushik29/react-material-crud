@@ -20,7 +20,8 @@ export default class AlertDialog extends React.Component<{
 
             config.callbacks.alert = (options = {}) => new Promise((resolve) => {
                 this.onConfirm = resolve
-                const {textContent, title, options: {ok, cancel}} = options
+                const {textContent, title, options: otherOptions = {}} = options
+                const {ok, cancel} = otherOptions
                 this.setState({textContent, title, open: true, cancel, ok})
             })
 
