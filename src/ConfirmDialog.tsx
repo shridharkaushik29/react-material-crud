@@ -21,7 +21,8 @@ export default class ConfirmDialog extends React.Component {
             config.callbacks.confirm = (options = {}) => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
-                const {textContent, title, options: {cancel, ok}} = options
+                const {textContent, title, options: otherOptions = {}} = options
+                const {cancel, ok} = otherOptions
                 this.setState({textContent, title, open: true, cancel, ok})
             })
 

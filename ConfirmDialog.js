@@ -39,7 +39,8 @@ var ConfirmDialog = /** @class */ (function (_super) {
                 return new Promise(function (resolve, reject) {
                     _this.onConfirm = resolve;
                     _this.onCancel = reject;
-                    var textContent = options.textContent, title = options.title, _a = options.options, cancel = _a.cancel, ok = _a.ok;
+                    var textContent = options.textContent, title = options.title, _a = options.options, otherOptions = _a === void 0 ? {} : _a;
+                    var cancel = otherOptions.cancel, ok = otherOptions.ok;
                     _this.setState({ textContent: textContent, title: title, open: true, cancel: cancel, ok: ok });
                 });
             };

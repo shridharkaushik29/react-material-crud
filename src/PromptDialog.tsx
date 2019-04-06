@@ -31,7 +31,8 @@ export default class PromptDialog extends React.Component {
             config.callbacks.prompt = (options = {}) => new Promise((resolve, reject) => {
                 this.onConfirm = resolve
                 this.onCancel = reject
-                const {textContent, title, options: {placeholder, initialValue = ""}} = options
+                const {textContent, title, options: otherOptions = {}} = options
+                const {placeholder, initialValue = ""} = otherOptions
                 this.setState({textContent, title, placeholder, show: true, value: initialValue})
             })
 

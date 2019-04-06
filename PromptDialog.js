@@ -48,7 +48,8 @@ var PromptDialog = /** @class */ (function (_super) {
                 return new Promise(function (resolve, reject) {
                     _this.onConfirm = resolve;
                     _this.onCancel = reject;
-                    var textContent = options.textContent, title = options.title, _a = options.options, placeholder = _a.placeholder, _b = _a.initialValue, initialValue = _b === void 0 ? "" : _b;
+                    var textContent = options.textContent, title = options.title, _a = options.options, otherOptions = _a === void 0 ? {} : _a;
+                    var placeholder = otherOptions.placeholder, _b = otherOptions.initialValue, initialValue = _b === void 0 ? "" : _b;
                     _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
                 });
             };
