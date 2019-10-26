@@ -1,90 +1,83 @@
-import * as React from "react";
-import {CrudRequest} from "@crud/core";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography} from "@material-ui/core";
-import {CrudContext} from "@crud/react/CrudContext";
+import {CrudRequest} from "@crud/core";
+import CrudContext from "@crud/react/CrudContext";
+import {DialogProps} from "@material-ui/core/Dialog";
 
-export interface PromptOptions {
-    title?: string,
-    textContent?: string,
-    initialValue?: any,
-    placeholder?: string,
-    ok?: string
-    cancel?: string,
-    dialogProps?: any
+interface PromptDialogProps extends Partial<DialogProps> {
+    open?: boolean
 }
 
-export default class PromptDialog extends React.Component {
+export default function PromptDialog(props: PromptDialogProps) {
 
-    context: CrudRequest
+    const $crud: CrudRequest = useContext(CrudContext);
 
-    static contextType = CrudContext
+    const [title, setTitle] = useState<string>("");
+    const [open, setOpen] = useState<boolean>(false);
+    const [value, setValue] = useState<string>("");
+    const [type, setType] = useState<string>("");
+    const [label, setLabel] = useState<string>("");
+    const [placeholder, setPlaceholder] = useState<string>("");
+    const [textContent, setTextContent] = useState<string>("");
+    const [okButtonText, setOkButtonContent] = useState<string>("");
+    const [cancelButtonText, setCancelButtonContent] = useState<string>("");
+    const onClose = useRef(null);
+    const onConfirm = useRef(null);
 
-    state: any = {}
-
-    onConfirm: (value: string) => void
-    onCancel: () => void
-
-    componentDidMount(): void {
-        const $crud = this.context;
+    useEffect(() => {
         $crud.config(config => {
-
             config.callbacks.prompt = (options = {}) => new Promise((resolve, reject) => {
-                this.onConfirm = resolve
-                this.onCancel = reject
-                const {textContent, title, placeholder, initialValue = ""} = options
-                this.setState({textContent, title, placeholder, show: true, value: initialValue})
-            })
+                const {textContent = "", title = "", cancelButtonText = "Cancel", confirmButtonText = "Submit", options: {value = "", label = "", placeholder = "Type here...", type = "text"} = {}} = options;
+                setOkButtonContent(confirmButtonText);
+                setCancelButtonContent(cancelButtonText);
+                setValue(value);
+                setLabel(label);
+                setType(type);
+                setPlaceholder(placeholder);
+                setTitle(title);
+                setTextContent(textContent);
+                onConfirm.current = resolve;
+                onClose.current = reject;
+                setOpen(true);
+            });
 
             return config;
-        })
-    }
+        });
+    }, []);
 
-    cancel() {
-        this.setState({
-            show: false
-        })
-        this.onCancel();
-    }
+    const confirm = () => {
+        onClose.current = onConfirm.current;
+        close();
+    };
 
-    confirm() {
-        this.setState({
-            show: false
-        })
-        this.onConfirm(String(this.state.value));
-    }
+    const close = () => {
+        setOpen(false);
+        onClose.current();
+    };
 
-    render(): React.ReactNode {
-        const {textContent = "", title = "", inputType = "text", placeholder = "Type here...", label = "", cancel = "Cancel", ok = "Submit"} = this.state
-        return <Dialog maxWidth="xs" fullWidth open={!!this.state.show} onClose={() => this.setState({show: false})}>
-            <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                <Typography variant="h6">{textContent}</Typography>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label={label}
-                    placeholder={placeholder}
-                    type={inputType}
-                    value={this.state.value}
-                    onChange={event => {
-                        const value = event.target.value;
-                        this.setState(({...state}: any) => {
-                            state.value = value
-                            return state;
-                        })
-                    }}
-                    fullWidth
-                />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => this.cancel()} color="primary">
-                    {cancel}
-                </Button>
-                <Button onClick={() => this.confirm()} color="primary">
-                    {ok}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    }
+    return <Dialog maxWidth="xs" fullWidth {...props} open={open} onClose={close}>
+        <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
+        <DialogContent>
+            <Typography variant="h6">{textContent}</Typography>
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label={label}
+                placeholder={placeholder}
+                type={type}
+                value={value}
+                onChange={e => setValue(e.target.value)}
+                fullWidth
+            />
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={close} color="primary">
+                {cancelButtonText}
+            </Button>
+            <Button onClick={confirm} color="primary">
+                {okButtonText}
+            </Button>
+        </DialogActions>
+    </Dialog>
 }

@@ -1,22 +1,23 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
     };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+    return __assign.apply(this, arguments);
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
 };
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -30,55 +31,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var withStyles_1 = __importDefault(require("@material-ui/core/styles/withStyles"));
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("react");
 var core_1 = require("@material-ui/core");
-var classNames = require("classnames");
-// @ts-ignore
-var NotifySnackbar = /** @class */ (function (_super) {
-    __extends(NotifySnackbar, _super);
-    function NotifySnackbar() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {
-            action: _this.props.action || React.createElement(core_1.Button, { color: "inherit", onClick: function () { return _this.setState({ open: false }); } }, "Hide")
-        };
-        return _this;
+var classnames_1 = __importDefault(require("classnames"));
+var CrudContext_1 = __importDefault(require("@crud/react/CrudContext"));
+var useStyles = core_1.makeStyles({
+    error: {
+        backgroundColor: "#a90000"
+    },
+    success: {
+        backgroundColor: "#009f00"
     }
-    NotifySnackbar.prototype.componentDidMount = function () {
-        var _this = this;
-        var $crud = this.context;
+});
+function NotifySnackbar(props) {
+    var $crud = react_1.useContext(CrudContext_1.default);
+    var _a = react_1.useState(false), open = _a[0], setOpen = _a[1];
+    var _b = react_1.useState(""), message = _b[0], setMessage = _b[1];
+    var _c = react_1.useState(null), action = _c[0], setAction = _c[1];
+    var _d = react_1.useState(null), type = _d[0], setType = _d[1];
+    var onClose = react_1.useRef(null);
+    var _e = props.contentProps, contentProps = _e === void 0 ? {} : _e, snackbarProps = __rest(props, ["contentProps"]);
+    var classes = useStyles(props);
+    react_1.useEffect(function () {
         $crud.config(function (config) {
-            config.callbacks.notify = function (options) { return new Promise(function (resolve, reject) {
-                _this.onClose = resolve;
-                var type = options.type, message = options.message;
-                _this.setState({ message: message, type: type, open: true });
+            config.callbacks.notify = function (options) { return new Promise(function (resolve) {
+                var type = options.type, message = options.message, _a = options.options, _b = (_a === void 0 ? {} : _a).action, action = _b === void 0 ? React.createElement(core_1.Button, { color: "inherit", onClick: close }, "Hide") : _b;
+                setType(type);
+                setAction(action);
+                setMessage(message);
+                setOpen(true);
+                onClose.current = resolve;
             }); };
             return config;
         });
+    }, []);
+    var close = function () {
+        onClose.current();
+        setOpen(false);
     };
-    NotifySnackbar.prototype.render = function () {
-        var _this = this;
-        var _a = this.props, classes = _a.classes, _b = _a.autoHideDuration, autoHideDuration = _b === void 0 ? 2000 : _b;
-        var _c = this.state, message = _c.message, type = _c.type, action = _c.action;
-        return React.createElement(core_1.Snackbar, { autoHideDuration: autoHideDuration, open: !!this.state.open, onClose: function () {
-                _this.setState({ open: false });
-                _this.onClose();
-            } },
-            React.createElement(core_1.SnackbarContent, { classes: {
-                    root: classNames(type === "success" ? classes.success : type === "error" ? classes.error : "")
-                }, message: message, action: action }));
-    };
-    NotifySnackbar.contextType = CrudContext_1.CrudContext;
-    NotifySnackbar = __decorate([
-        withStyles_1.default({
-            error: {
-                backgroundColor: "#a90000"
-            },
-            success: {
-                backgroundColor: "#009f00"
-            }
-        })
-    ], NotifySnackbar);
-    return NotifySnackbar;
-}(React.Component));
+    return React.createElement(core_1.Snackbar, __assign({}, snackbarProps, { open: open, onClose: close }),
+        React.createElement(core_1.SnackbarContent, __assign({}, contentProps, { classes: __assign({}, contentProps.classes, { root: classnames_1.default(type === "success" ? classes.success : type === "error" ? classes.error : "") }), message: message, action: action })));
+}
 exports.default = NotifySnackbar;

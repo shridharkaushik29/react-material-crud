@@ -1,51 +1,37 @@
 import * as React from "react";
+import {useContext, useEffect, useState} from "react";
 import {CrudRequest} from "@crud/core";
-import {LinearProgress} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
-import {CrudContext} from "@crud/react/CrudContext";
+import {LinearProgress, makeStyles} from "@material-ui/core";
+import CrudContext from "@crud/react/CrudContext";
+import {LinearProgressProps} from "@material-ui/core/LinearProgress";
 
+interface ProgressIndicatorProps extends Partial<LinearProgressProps> {
 
-// @ts-ignore
-@withStyles({
+}
+
+const useStyles = makeStyles({
     root: {
         position: "absolute",
         top: 0,
         width: '100%',
         zIndex: 1301
     }
-})
-export default class ProgressIndicator extends React.Component {
+});
 
-    context: CrudRequest
+export default function ProgressIndicator(props: ProgressIndicatorProps) {
 
-    props: any
+    const [show, setVisibility] = useState<boolean>(false);
 
-    static contextType = CrudContext
+    const classes = useStyles(props);
 
-    state: any = {}
+    const $crud: CrudRequest = useContext(CrudContext);
 
-    onClose: () => void
-
-    componentDidMount(): void {
-        const $crud = this.context;
+    useEffect(() => {
         $crud.config(config => {
-            config.callbacks.loading = value => this.setState({show: value})
+            config.callbacks.loading = value => setVisibility(value);
             return config;
         })
-    }
+    }, []);
 
-    render(): React.ReactNode {
-
-        const {color = "secondary", variant = "indeterminate", classes, ...props} = this.props;
-        const {show} = this.state;
-
-        return show ? <LinearProgress
-            classes={{
-                root: classes.root
-            }}
-            color={color}
-            variant={variant}
-            {...props}
-        /> : null
-    }
+    return show ? <LinearProgress classes={classes} {...props}/> : null
 }

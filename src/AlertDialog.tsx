@@ -1,64 +1,57 @@
 import * as React from "react";
-import {CrudContext} from "@crud/react/CrudContext";
-import {CrudRequest} from "@crud/core";
+import {useContext, useEffect, useRef, useState} from "react";
+import CrudContext from "@crud/react/CrudContext";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
+import {AlertOptions} from "@crud/core";
+import {DialogProps} from "@material-ui/core/Dialog";
 
-export default class AlertDialog extends React.Component<{
-    dialogProps?: any
-}, any> {
-    context: CrudRequest
+interface AlertDialogProps extends Partial<DialogProps> {
+    open?: boolean
+}
 
-    static contextType = CrudContext
+export default function AlertDialog(props: AlertDialogProps) {
 
-    state: any = {}
+    const $crud = useContext(CrudContext);
 
-    onConfirm: () => void
+    const [title, setTitle] = useState<string>("");
+    const [open, setOpen] = useState<boolean>(false);
+    const [textContent, setTextContent] = useState<string>("");
+    const [okButtonText, setOkButtonContent] = useState<string>("");
+    const onConfirm = useRef(null);
 
-    componentDidMount(): void {
-        const $crud = this.context;
+    useEffect(() => {
         $crud.config(config => {
-
-            config.callbacks.alert = (options = {}) => new Promise((resolve) => {
-                this.onConfirm = resolve
-                const {textContent, title, cancel, ok} = options
-                this.setState({textContent, title, open: true, cancel, ok})
-            })
-
+            config.callbacks.alert = (alertOptions: AlertOptions = {}) => new Promise((resolve) => {
+                const {textContent, title, options: {okButtonText}} = alertOptions;
+                setTextContent(textContent);
+                setTitle(title);
+                setOkButtonContent(okButtonText);
+                onConfirm.current = resolve;
+            });
             return config;
         })
-    }
+    }, []);
 
+    const close = () => {
+        setOpen(false);
+        onConfirm.current();
+    };
 
-    confirm() {
-        this.setState({
-            open: false
-        })
-        this.onConfirm();
-    }
-
-    render(): React.ReactNode {
-
-        const {
-            state: {title, textContent, ok = "Hide"},
-            props: {dialogProps}
-        } = this;
-
-        return <Dialog
-            fullWidth
-            maxWidth="xs"
-            open={!!this.state.open}
-            onClose={() => this.setState({open: false})}
-            {...dialogProps}
-        >
-            <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                <DialogContentText>{textContent}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => this.confirm()} color="primary" autoFocus>
-                    {ok}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    }
+    return <Dialog
+        fullWidth
+        maxWidth="xs"
+        {...props}
+        open={open}
+        onClose={close}
+    >
+        <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
+        <DialogContent>
+            <DialogContentText>{textContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={close} color="primary" autoFocus>
+                {okButtonText}
+            </Button>
+        </DialogActions>
+    </Dialog>
 }

@@ -9,17 +9,17 @@
   "peerDependencies": {
     "@crud/core": "2.0.*",
     "@crud/react": "1.0.*",
-    "@material-ui/core": "^3.9.2",
-    "react": "^16.8.3"
+    "@material-ui/core": "4.*"
   },
   "devDependencies": {
-    "@crud/core": "^2.0.2",
-    "@crud/react": "^1.0.0",
-    "@material-ui/core": "^3.9.0",
-    "@types/classnames": "^2.2.7",
+    "@crud/core": "^2.1.4",
+    "@crud/react": "^1.1.1",
+    "@material-ui/core": "^4.5.1",
+    "@types/classnames": "^2.2.9",
+    "@types/react": "^16.9.11",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "lodash": "^4.17.11",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
     "typescript": "^3.2.4"
   }
 }

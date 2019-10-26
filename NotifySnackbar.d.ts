@@ -1,19 +1,8 @@
-import * as React from "react";
-import { CrudRequest } from "@crud/core";
-export default class NotifySnackbar extends React.Component {
-    context: CrudRequest;
-    props: {
-        classes?: {
-            error?: string;
-            success?: string;
-        };
-        autoHideDuration?: number;
-        onOpen?: (data: any) => void;
-        action?: any;
-    };
-    static contextType: React.Context<CrudRequest>;
-    state: any;
-    onClose: () => void;
-    componentDidMount(): void;
-    render(): React.ReactNode;
+import { SnackbarProps } from "@material-ui/core/Snackbar";
+import { SnackbarContentProps } from "@material-ui/core/SnackbarContent";
+interface NotifySnackbarProps extends Partial<SnackbarProps> {
+    contentProps?: SnackbarContentProps;
+    open?: boolean;
 }
+export default function NotifySnackbar(props: NotifySnackbarProps): JSX.Element;
+export {};

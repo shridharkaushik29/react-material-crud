@@ -1,25 +1,14 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
     };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
+    return __assign.apply(this, arguments);
 };
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -28,65 +17,63 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __importStar(require("react"));
+var react_1 = __importStar(require("react"));
 var core_1 = require("@material-ui/core");
-var CrudContext_1 = require("@crud/react/CrudContext");
-var PromptDialog = /** @class */ (function (_super) {
-    __extends(PromptDialog, _super);
-    function PromptDialog() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {};
-        return _this;
-    }
-    PromptDialog.prototype.componentDidMount = function () {
-        var _this = this;
-        var $crud = this.context;
+var CrudContext_1 = __importDefault(require("@crud/react/CrudContext"));
+function PromptDialog(props) {
+    var $crud = react_1.useContext(CrudContext_1.default);
+    var _a = react_1.useState(""), title = _a[0], setTitle = _a[1];
+    var _b = react_1.useState(false), open = _b[0], setOpen = _b[1];
+    var _c = react_1.useState(""), value = _c[0], setValue = _c[1];
+    var _d = react_1.useState(""), type = _d[0], setType = _d[1];
+    var _e = react_1.useState(""), label = _e[0], setLabel = _e[1];
+    var _f = react_1.useState(""), placeholder = _f[0], setPlaceholder = _f[1];
+    var _g = react_1.useState(""), textContent = _g[0], setTextContent = _g[1];
+    var _h = react_1.useState(""), okButtonText = _h[0], setOkButtonContent = _h[1];
+    var _j = react_1.useState(""), cancelButtonText = _j[0], setCancelButtonContent = _j[1];
+    var onClose = react_1.useRef(null);
+    var onConfirm = react_1.useRef(null);
+    react_1.useEffect(function () {
         $crud.config(function (config) {
             config.callbacks.prompt = function (options) {
                 if (options === void 0) { options = {}; }
                 return new Promise(function (resolve, reject) {
-                    _this.onConfirm = resolve;
-                    _this.onCancel = reject;
-                    var textContent = options.textContent, title = options.title, placeholder = options.placeholder, _a = options.initialValue, initialValue = _a === void 0 ? "" : _a;
-                    _this.setState({ textContent: textContent, title: title, placeholder: placeholder, show: true, value: initialValue });
+                    var _a = options.textContent, textContent = _a === void 0 ? "" : _a, _b = options.title, title = _b === void 0 ? "" : _b, _c = options.cancelButtonText, cancelButtonText = _c === void 0 ? "Cancel" : _c, _d = options.confirmButtonText, confirmButtonText = _d === void 0 ? "Submit" : _d, _e = options.options, _f = _e === void 0 ? {} : _e, _g = _f.value, value = _g === void 0 ? "" : _g, _h = _f.label, label = _h === void 0 ? "" : _h, _j = _f.placeholder, placeholder = _j === void 0 ? "Type here..." : _j, _k = _f.type, type = _k === void 0 ? "text" : _k;
+                    setOkButtonContent(confirmButtonText);
+                    setCancelButtonContent(cancelButtonText);
+                    setValue(value);
+                    setLabel(label);
+                    setType(type);
+                    setPlaceholder(placeholder);
+                    setTitle(title);
+                    setTextContent(textContent);
+                    onConfirm.current = resolve;
+                    onClose.current = reject;
+                    setOpen(true);
                 });
             };
             return config;
         });
+    }, []);
+    var confirm = function () {
+        onClose.current = onConfirm.current;
+        close();
     };
-    PromptDialog.prototype.cancel = function () {
-        this.setState({
-            show: false
-        });
-        this.onCancel();
+    var close = function () {
+        setOpen(false);
+        onClose.current();
     };
-    PromptDialog.prototype.confirm = function () {
-        this.setState({
-            show: false
-        });
-        this.onConfirm(String(this.state.value));
-    };
-    PromptDialog.prototype.render = function () {
-        var _this = this;
-        var _a = this.state, _b = _a.textContent, textContent = _b === void 0 ? "" : _b, _c = _a.title, title = _c === void 0 ? "" : _c, _d = _a.inputType, inputType = _d === void 0 ? "text" : _d, _e = _a.placeholder, placeholder = _e === void 0 ? "Type here..." : _e, _f = _a.label, label = _f === void 0 ? "" : _f, _g = _a.cancel, cancel = _g === void 0 ? "Cancel" : _g, _h = _a.ok, ok = _h === void 0 ? "Submit" : _h;
-        return React.createElement(core_1.Dialog, { maxWidth: "xs", fullWidth: true, open: !!this.state.show, onClose: function () { return _this.setState({ show: false }); } },
-            React.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
-            React.createElement(core_1.DialogContent, null,
-                React.createElement(core_1.Typography, { variant: "h6" }, textContent),
-                React.createElement(core_1.TextField, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: inputType, value: this.state.value, onChange: function (event) {
-                        var value = event.target.value;
-                        _this.setState(function (_a) {
-                            var state = __rest(_a, []);
-                            state.value = value;
-                            return state;
-                        });
-                    }, fullWidth: true })),
-            React.createElement(core_1.DialogActions, null,
-                React.createElement(core_1.Button, { onClick: function () { return _this.cancel(); }, color: "primary" }, cancel),
-                React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary" }, ok)));
-    };
-    PromptDialog.contextType = CrudContext_1.CrudContext;
-    return PromptDialog;
-}(React.Component));
+    return react_1.default.createElement(core_1.Dialog, __assign({ maxWidth: "xs", fullWidth: true }, props, { open: open, onClose: close }),
+        react_1.default.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
+        react_1.default.createElement(core_1.DialogContent, null,
+            react_1.default.createElement(core_1.Typography, { variant: "h6" }, textContent),
+            react_1.default.createElement(core_1.TextField, { autoFocus: true, margin: "dense", id: "name", label: label, placeholder: placeholder, type: type, value: value, onChange: function (e) { return setValue(e.target.value); }, fullWidth: true })),
+        react_1.default.createElement(core_1.DialogActions, null,
+            react_1.default.createElement(core_1.Button, { onClick: close, color: "primary" }, cancelButtonText),
+            react_1.default.createElement(core_1.Button, { onClick: confirm, color: "primary" }, okButtonText)));
+}
 exports.default = PromptDialog;

@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -30,49 +17,45 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var CrudContext_1 = require("@crud/react/CrudContext");
+var react_1 = require("react");
+var CrudContext_1 = __importDefault(require("@crud/react/CrudContext"));
 var core_1 = require("@material-ui/core");
-var AlertDialog = /** @class */ (function (_super) {
-    __extends(AlertDialog, _super);
-    function AlertDialog() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.state = {};
-        return _this;
-    }
-    AlertDialog.prototype.componentDidMount = function () {
-        var _this = this;
-        var $crud = this.context;
+function AlertDialog(props) {
+    var $crud = react_1.useContext(CrudContext_1.default);
+    var _a = react_1.useState(""), title = _a[0], setTitle = _a[1];
+    var _b = react_1.useState(false), open = _b[0], setOpen = _b[1];
+    var _c = react_1.useState(""), textContent = _c[0], setTextContent = _c[1];
+    var _d = react_1.useState(""), okButtonText = _d[0], setOkButtonContent = _d[1];
+    var onConfirm = react_1.useRef(null);
+    react_1.useEffect(function () {
         $crud.config(function (config) {
-            config.callbacks.alert = function (options) {
-                if (options === void 0) { options = {}; }
+            config.callbacks.alert = function (alertOptions) {
+                if (alertOptions === void 0) { alertOptions = {}; }
                 return new Promise(function (resolve) {
-                    _this.onConfirm = resolve;
-                    var textContent = options.textContent, title = options.title, cancel = options.cancel, ok = options.ok;
-                    _this.setState({ textContent: textContent, title: title, open: true, cancel: cancel, ok: ok });
+                    var textContent = alertOptions.textContent, title = alertOptions.title, okButtonText = alertOptions.options.okButtonText;
+                    setTextContent(textContent);
+                    setTitle(title);
+                    setOkButtonContent(okButtonText);
+                    onConfirm.current = resolve;
                 });
             };
             return config;
         });
+    }, []);
+    var close = function () {
+        setOpen(false);
+        onConfirm.current();
     };
-    AlertDialog.prototype.confirm = function () {
-        this.setState({
-            open: false
-        });
-        this.onConfirm();
-    };
-    AlertDialog.prototype.render = function () {
-        var _this = this;
-        var _a = this, _b = _a.state, title = _b.title, textContent = _b.textContent, _c = _b.ok, ok = _c === void 0 ? "Hide" : _c, dialogProps = _a.props.dialogProps;
-        return React.createElement(core_1.Dialog, __assign({ fullWidth: true, maxWidth: "xs", open: !!this.state.open, onClose: function () { return _this.setState({ open: false }); } }, dialogProps),
-            React.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
-            React.createElement(core_1.DialogContent, null,
-                React.createElement(core_1.DialogContentText, null, textContent)),
-            React.createElement(core_1.DialogActions, null,
-                React.createElement(core_1.Button, { onClick: function () { return _this.confirm(); }, color: "primary", autoFocus: true }, ok)));
-    };
-    AlertDialog.contextType = CrudContext_1.CrudContext;
-    return AlertDialog;
-}(React.Component));
+    return React.createElement(core_1.Dialog, __assign({ fullWidth: true, maxWidth: "xs" }, props, { open: open, onClose: close }),
+        React.createElement(core_1.DialogTitle, { id: "responsive-dialog-title" }, title),
+        React.createElement(core_1.DialogContent, null,
+            React.createElement(core_1.DialogContentText, null, textContent)),
+        React.createElement(core_1.DialogActions, null,
+            React.createElement(core_1.Button, { onClick: close, color: "primary", autoFocus: true }, okButtonText)));
+}
 exports.default = AlertDialog;

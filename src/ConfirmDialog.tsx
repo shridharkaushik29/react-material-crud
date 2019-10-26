@@ -1,71 +1,71 @@
 import * as React from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import {CrudRequest} from "@crud/core";
-import {CrudContext} from "@crud/react/CrudContext";
+import CrudContext from "@crud/react/CrudContext";
+import {DialogProps} from "@material-ui/core/Dialog";
 
-export default class ConfirmDialog extends React.Component {
+interface ConfirmDialogProps extends Partial<DialogProps> {
+    open?: boolean
+}
 
-    context: CrudRequest
+export default function ConfirmDialog(props: ConfirmDialogProps) {
 
-    static contextType = CrudContext
+    const $crud: CrudRequest = useContext(CrudContext);
 
-    state: any = {}
+    const [title, setTitle] = useState<string>("");
+    const [open, setOpen] = useState<boolean>(false);
+    const [textContent, setTextContent] = useState<string>("");
+    const [okButtonText, setOkButtonContent] = useState<string>("");
+    const [cancelButtonText, setCancelButtonContent] = useState<string>("");
+    const onClose = useRef(null);
+    const onConfirm = useRef(null);
 
-    onCancel: () => void
-    onConfirm: () => void
-
-    componentDidMount(): void {
-        const $crud = this.context;
+    useEffect(() => {
         $crud.config(config => {
-
             config.callbacks.confirm = (options = {}) => new Promise((resolve, reject) => {
-                this.onConfirm = resolve
-                this.onCancel = reject
-                const {textContent, title, cancel, ok} = options
-                this.setState({textContent, title, open: true, cancel, ok})
-            })
-
+                const {textContent = "This action may not be reversible", title = "Are you sure?", options: {cancel = "No, I'm Not", ok = "Yes! Sure"} = {}} = options;
+                setTitle(title);
+                setTextContent(textContent);
+                setCancelButtonContent(cancel);
+                setOkButtonContent(ok);
+                onClose.current = reject;
+                onConfirm.current = resolve;
+                setOpen(true);
+            });
             return config;
         })
-    }
+    }, []);
 
-    cancel() {
-        this.setState({
-            open: false
-        })
-        this.onCancel();
-    }
+    const confirm = () => {
+        onClose.current = onConfirm.current;
+        close();
+    };
 
-    confirm() {
-        this.setState({
-            open: false
-        })
-        this.onConfirm();
-    }
+    const close = () => {
+        setOpen(false);
+        onClose.current();
+    };
 
-    render(): React.ReactNode {
-
-        const {title = "Are you sure?", textContent = "This action may not be reversible", cancel = "No, I'm Not", ok = "Yes! Sure"} = this.state;
-
-        return <Dialog
-            fullWidth
-            maxWidth="xs"
-            open={!!this.state.open}
-            onClose={() => this.setState({open: false})}
-            aria-labelledby="responsive-dialog-title"
-        >
-            <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                <DialogContentText>{textContent}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={() => this.cancel()} color="primary">
-                    {cancel}
-                </Button>
-                <Button onClick={() => this.confirm()} color="primary" autoFocus>
-                    {ok}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    }
+    return <Dialog
+        fullWidth
+        maxWidth="xs"
+        {...props}
+        open={open}
+        onClose={close}
+    >
+        <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
+        <DialogContent>
+            <DialogContentText>{textContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={close} color="primary">
+                {cancelButtonText}
+            </Button>
+            <Button onClick={confirm} color="primary" autoFocus>
+                {okButtonText}
+            </Button>
+        </DialogActions>
+    </Dialog>
 }
+
