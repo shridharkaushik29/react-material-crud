@@ -37,10 +37,11 @@ function AlertDialog(props) {
             config.callbacks.alert = function (alertOptions) {
                 if (alertOptions === void 0) { alertOptions = {}; }
                 return new Promise(function (resolve) {
-                    var textContent = alertOptions.textContent, title = alertOptions.title, okButtonText = alertOptions.options.okButtonText;
+                    var textContent = alertOptions.textContent, title = alertOptions.title, _a = alertOptions.options, _b = (_a === void 0 ? {} : _a).okButtonText, okButtonText = _b === void 0 ? "Okay!" : _b;
                     setTextContent(textContent);
                     setTitle(title);
                     setOkButtonContent(okButtonText);
+                    setOpen(true);
                     onConfirm.current = resolve;
                 });
             };

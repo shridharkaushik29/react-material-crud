@@ -22,10 +22,11 @@ export default function AlertDialog(props: AlertDialogProps) {
     useEffect(() => {
         $crud.config(config => {
             config.callbacks.alert = (alertOptions: AlertOptions = {}) => new Promise((resolve) => {
-                const {textContent, title, options: {okButtonText}} = alertOptions;
+                const {textContent, title, options: {okButtonText = "Okay!"} = {}} = alertOptions;
                 setTextContent(textContent);
                 setTitle(title);
                 setOkButtonContent(okButtonText);
+                setOpen(true);
                 onConfirm.current = resolve;
             });
             return config;
