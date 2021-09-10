@@ -55,7 +55,7 @@ function NotifySnackbar(props) {
     react_1.useEffect(function () {
         $crud.config(function (config) {
             config.callbacks.notify = function (options) { return new Promise(function (resolve) {
-                var type = options.type, message = options.message, _a = options.options, _b = (_a === void 0 ? {} : _a).action, action = _b === void 0 ? React.createElement(core_1.Button, { color: "inherit", onClick: close }, "Hide") : _b;
+                var type = options.type, message = options.message, _a = options.options, _b = (_a === void 0 ? {} : _a).action, action = _b === void 0 ? React.createElement(core_1.Button, { color: "inherit", onClick: close }, props.closeText ?? "Hide" ) : _b;
                 setType(type);
                 setAction(action);
                 setMessage(message);
