@@ -18,20 +18,18 @@ const useStyles = makeStyles({
 
 interface NotifySnackbarProps extends Partial<SnackbarProps> {
     contentProps?: SnackbarContentProps,
+    closeText?: any,
     open?: boolean
 }
 
 export default function NotifySnackbar(props: NotifySnackbarProps) {
-
+    const {contentProps = {}, closeText = "Hide", ...snackbarProps} = props;
     const $crud: CrudRequest = useContext(CrudContext);
     const [open, setOpen] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [action, setAction] = useState<any>(null);
     const [type, setType] = useState<"success" | "error" | "warning">(null);
     const onClose = useRef(null);
-
-    const {contentProps = {}, ...snackbarProps} = props;
-
     const classes = useStyles(props);
 
     useEffect(() => {
@@ -40,7 +38,7 @@ export default function NotifySnackbar(props: NotifySnackbarProps) {
             config.callbacks.notify = options => new Promise((resolve) => {
                 const {
                     type, message, options: {
-                        action = <Button color="inherit" onClick={close}>Hide</Button>
+                        action = <Button color="inherit" onClick={close}>{closeText}</Button>
                     } = {}
                 } = options;
                 setType(type);

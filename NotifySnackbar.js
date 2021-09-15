@@ -44,18 +44,18 @@ var useStyles = core_1.makeStyles({
     }
 });
 function NotifySnackbar(props) {
+    var _a = props.contentProps, contentProps = _a === void 0 ? {} : _a, _b = props.closeText, closeText = _b === void 0 ? "Hide" : _b, snackbarProps = __rest(props, ["contentProps", "closeText"]);
     var $crud = react_1.useContext(CrudContext_1.default);
-    var _a = react_1.useState(false), open = _a[0], setOpen = _a[1];
-    var _b = react_1.useState(""), message = _b[0], setMessage = _b[1];
-    var _c = react_1.useState(null), action = _c[0], setAction = _c[1];
-    var _d = react_1.useState(null), type = _d[0], setType = _d[1];
+    var _c = react_1.useState(false), open = _c[0], setOpen = _c[1];
+    var _d = react_1.useState(""), message = _d[0], setMessage = _d[1];
+    var _e = react_1.useState(null), action = _e[0], setAction = _e[1];
+    var _f = react_1.useState(null), type = _f[0], setType = _f[1];
     var onClose = react_1.useRef(null);
-    var _e = props.contentProps, contentProps = _e === void 0 ? {} : _e, snackbarProps = __rest(props, ["contentProps"]);
     var classes = useStyles(props);
     react_1.useEffect(function () {
         $crud.config(function (config) {
             config.callbacks.notify = function (options) { return new Promise(function (resolve) {
-                var type = options.type, message = options.message, _a = options.options, _b = (_a === void 0 ? {} : _a).action, action = _b === void 0 ? React.createElement(core_1.Button, { color: "inherit", onClick: close }, "Hide") : _b;
+                var type = options.type, message = options.message, _a = options.options, _b = (_a === void 0 ? {} : _a).action, action = _b === void 0 ? React.createElement(core_1.Button, { color: "inherit", onClick: close }, closeText) : _b;
                 setType(type);
                 setAction(action);
                 setMessage(message);
